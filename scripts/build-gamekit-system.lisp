@@ -13,4 +13,5 @@
 (ql:quickload `(:trivial-gamekit/distribution ,*system-name*))
 (gamekit.distribution:deliver *system-name*
                               (uiop:find-standard-case-symbol *main-class-name* *package-name*)
-                              :build-directory *build-directory*)
+                              :build-directory *build-directory*
+                              :lisp (first (uiop:raw-command-line-arguments)))

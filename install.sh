@@ -2,25 +2,35 @@
 
 UNAME="$(uname -s)"
 case "${UNAME}" in
-    Linux*)     PLATFORM=linux;;
-    Darwin*)    PLATFORM=darwin;;
-    MSYS*)      PLATFORM=windows;;
-    *)          PLATFORM="UNKNOWN:${UNAME}"
+    Linux*)     PLATFORM=linux;CCL_BIN=lx86cl64;;
+    Darwin*)    PLATFORM=darwin;CCL_BIN=dx86cl64;;
+    MSYS*)      PLATFORM=windows;CCL_BIN=wx86cl64;;
+    *)          PLATFORM="UNKNOWN:${UNAME}";CCL_BIN=lx86cl64
 esac
 
-SBCL=sbcl-1.4.2-x86-64-$PLATFORM
-SBCL_ARCHIVE=/tmp/$SBCL.tar.gz
-SBCL_URL=http://bodge.borodust.org/files/$SBCL.tar.gz
-SBCL_PATH=$HOME/opt/sbcl/
+ARCH=${2:-x86-64}
+LISP_IMPL=${1:-sbcl}
+FILES_URL=http://bodge.borodust.org/files/
+
+LISP=$LISP_IMPL-$ARCH-$PLATFORM
+LISP_ARCHIVE=/tmp/$LISP.tar.gz
+LISP_URL=$FILES_URL/$LISP.tar.gz
+LISP_PATH=$HOME/opt/lisp/
 BIN_PATH=$HOME/bin/
-SBCL_BIN=$BIN_PATH/sbcl
+LISP_RUNNER=$BIN_PATH/lisp
+LISP_RUNNER_URL=$FILES_URL/$LISP_IMPL.sh
+LISP_BIN=$BIN_PATH/lisp-bin
 QUICKLISP_URL=https://beta.quicklisp.org/quicklisp.lisp
 QUICKLISP_FILE=$HOME/quicklisp.lisp
-SCRIPTS_URL=http://bodge.borodust.org/files/scripts.tar.gz
+SCRIPTS_URL=$FILES_URL/scripts.tar.gz
 SCRIPTS_ARCHIVE=/tmp/scripts.tar.gz
 SCRIPTS_PATH=$HOME/bodge/scripts/
 
+CCL_IMAGE=$LISP_PATH/$CCL_BIN.image
+
 download () {
+    echo "Downloading $1 into $2"
+    mkdir -p "$(dirname $2)"
     if curl --no-progress-bar -o $2 -L $1; then
         return 0;
     else
@@ -40,19 +50,20 @@ inflate () {
     fi
 }
 
-ensure_sbcl () {
-    if [ -f "$SBCL_BIN" ]; then
-        echo "SBCL found"
+ensure_lisp () {
+    if [ -f "$LISP_BIN" ]; then
+        echo "LISP found"
     else
-        echo "Installing SBCL"
-        download $SBCL_URL $SBCL_ARCHIVE
-        inflate $SBCL_ARCHIVE $SBCL_PATH
-        mkdir -p $BIN_PATH
-        ln -s $SBCL_PATH/run-sbcl.sh $SBCL_BIN
+        echo "Installing LISP"
+        download $LISP_URL $LISP_ARCHIVE
+        inflate $LISP_ARCHIVE $LISP_PATH
+        mkdir -p "$(dirname $LISP_BIN)"
+        download $LISP_RUNNER_URL $LISP_RUNNER
+        chmod +x $LISP_RUNNER
     fi
 }
 
-ensure_sbcl
+ensure_lisp
 echo "Preparing scripts"
 download $SCRIPTS_URL $SCRIPTS_ARCHIVE
 inflate $SCRIPTS_ARCHIVE $SCRIPTS_PATH
@@ -60,4 +71,4 @@ echo "Preparing Quicklisp"
 download $QUICKLISP_URL $QUICKLISP_FILE
 
 
-$SBCL_BIN --script $SCRIPTS_PATH/prepare-quicklisp.lisp $QUICKLISP_FILE
+$LISP_RUNNER $SCRIPTS_PATH/prepare-quicklisp.lisp $QUICKLISP_FILE
