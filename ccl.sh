@@ -9,4 +9,4 @@ esac
 
 SCRIPT=$1
 shift
-exec $HOME/opt/lisp/$CCL_BIN --quiet --batch --load $SCRIPT --eval "(ccl:quit)" -- $@
+exec $HOME/opt/lisp/$CCL_BIN --quiet --batch --load $SCRIPT --eval "(#__exit 0)" -- $@

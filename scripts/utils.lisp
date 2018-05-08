@@ -19,10 +19,3 @@
 
 (defun script (name)
   (load (merge-pathnames (format nil "~A.lisp" name) *script-path*)))
-
-
-(defun exit (&optional (code 0))
-  #+ccl
-  (ccl:quit code)
-  #+sbcl
-  (sb-ext:quit :unix-status code))
