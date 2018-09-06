@@ -1,4 +1,3 @@
-(load (merge-pathnames "utils.lisp" (directory-namestring *load-truename*)))
 (load "~/quicklisp/setup.lisp")
 
 (bind-arguments
