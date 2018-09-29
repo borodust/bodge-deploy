@@ -5,6 +5,7 @@ case "${UNAME}" in
     Linux*)     PLATFORM=linux;CCL_BIN=lx86cl64;;
     Darwin*)    PLATFORM=darwin;CCL_BIN=dx86cl64;;
     MSYS*)      PLATFORM=windows;CCL_BIN=wx86cl64;;
+    MINGW*)     PLATFORM=windows;CCL_BIN=wx86cl64;;
     *)          PLATFORM="UNKNOWN:${UNAME}";CCL_BIN=lx86cl64
 esac
 
