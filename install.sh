@@ -72,4 +72,4 @@ echo "Preparing Quicklisp"
 download $QUICKLISP_URL $QUICKLISP_FILE
 
 
-$LISP_RUNNER $SCRIPTS_PATH/prepare-quicklisp.lisp $QUICKLISP_FILE
+$LISP_RUNNER $SCRIPTS_PATH/ensure-quicklisp.lisp $QUICKLISP_FILE

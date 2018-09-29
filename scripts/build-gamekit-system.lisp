@@ -1,4 +1,5 @@
-(load "~/quicklisp/setup.lisp")
+(script "ensure-quicklisp")
+(script "install-dist")
 
 (bind-arguments
   *system-name*

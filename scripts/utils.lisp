@@ -11,7 +11,7 @@
          (append
           (loop for (var) in bindings
              collect `(defvar ,var nil))
-          `((destructuring-bind (,@(mapcar #'cdr bindings))
+          `((destructuring-bind (&optional ,@(mapcar #'cdr bindings))
                 (uiop:command-line-arguments)
               (setf ,@(loop for (var . value) in bindings
                          append (list var value)))))))))
