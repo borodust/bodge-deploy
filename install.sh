@@ -83,4 +83,4 @@ $LISP_RUNNER $SCRIPTS_PATH/ensure-quicklisp.lisp $QUICKLISP_FILE
 
 echo "Installing c2ffi"
 download $C2FFI_URL $C2FFI_ARCHIVE_PATH
-cd $BIN_PATH && unzip $C2FFI_ARCHIVE_PATH
+cd $BIN_PATH && unzip -o $C2FFI_ARCHIVE_PATH
