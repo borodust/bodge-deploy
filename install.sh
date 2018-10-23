@@ -1,5 +1,7 @@
 #!/bin/bash
 
+shopt -s nocasematch
+
 UNAME="$(uname -s)"
 case "${UNAME}" in
     Linux*)     PLATFORM=linux;CCL_BIN=lx86cl64;;
