@@ -6,9 +6,13 @@
   *package-name*
   *main-class-name*
   *project-directory*
-  *build-directory*)
+  *build-directory*
+  *use-gl2*)
 
 (push (uiop:ensure-directory-pathname *project-directory*) ql:*local-project-directories*)
+
+(when *use-gl2*
+  (pushnew :bodge-gl2 *features*))
 
 (ql:quickload `(:trivial-gamekit/distribution ,*system-name*))
 (gamekit.distribution:deliver *system-name*
