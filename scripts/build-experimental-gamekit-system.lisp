@@ -14,7 +14,7 @@
 (when *use-gl2*
   (pushnew :bodge-gl2 *features*))
 
-(ql:quickload `(:trivial-gamekit/distribution ,*system-name*))
+(ql:quickload `(,*system-name* :trivial-gamekit/distribution))
 (gamekit.distribution:deliver *system-name*
                               (uiop:find-standard-case-symbol *main-class-name* *package-name*)
                               :build-directory *build-directory*
