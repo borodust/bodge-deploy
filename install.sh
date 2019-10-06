@@ -16,7 +16,7 @@ esac
 
 FILES_URL=http://bodge.borodust.org/files
 
-BIN_PATH=$HOME/bin/
+BIN_PATH=$HOME/.bodge/bin/
 
 LISP=$LISP_IMPL-$PLATFORM-$ARCH
 LISP_ARCHIVE=/tmp/$LISP.tar.gz
@@ -78,4 +78,4 @@ inflate $SCRIPTS_ARCHIVE $SCRIPTS_PATH
 
 echo "Preparing Quicklisp"
 download $QUICKLISP_URL $QUICKLISP_FILE
-$LISP_RUNNER $SCRIPTS_PATH/ensure-quicklisp.lisp $QUICKLISP_FILE
+$LISP_RUNNER ensure-quicklisp $QUICKLISP_FILE

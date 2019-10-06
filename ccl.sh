@@ -12,5 +12,9 @@ case "${UNAME}" in
 esac
 
 SCRIPT=$1
+SCRIPT_DIR=$HOME/.bodge/scripts
 shift
-exec $HOME/.bodge/lisp/$CCL_BIN --quiet --batch --load "$HOME/.bodge/scripts/init.lisp" --load $SCRIPT --eval "(#__exit 0)" -- $@
+exec $HOME/.bodge/lisp/$CCL_BIN --quiet --no-init --batch \
+     --load "$SCRIPT_DIR/init.lisp" \
+     --eval "(cl-user::command-line-script \"$SCRIPT\")" \
+     -- $@

@@ -7,6 +7,10 @@ SHELL_SCRIPTS = $(WORK_DIR)/install.sh $(WORK_DIR)/ccl.sh $(WORK_DIR)/sbcl.sh
 deploy: scripts $(SHELL_SCRIPTS)
 	scp $(BUILD_DIR)/scripts.tar.gz $(SHELL_SCRIPTS) root.develserv:/var/www/bodge/files/
 
+install-scripts:
+	cp -R $(WORK_DIR)/scripts/* ~/.bodge/scripts/
+
+
 scripts: prepare
 	tar -czf $(BUILD_DIR)/scripts.tar.gz scripts/
 
