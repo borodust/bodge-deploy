@@ -1,3 +1,5 @@
+(cl:in-package :cl-user)
+
 (require 'asdf)
 (require 'uiop)
 
@@ -29,3 +31,21 @@
     (let ((*read-eval* nil))
       (with-input-from-string (in string)
         (read in)))))
+
+
+(defun enable-features (&rest features)
+  (setf *features* (nunion *features* features :test #'string=)))
+
+
+(defun disable-features (&rest features)
+  (setf *features* (nset-difference *features* features :test #'string=)))
+
+
+(defmacro with-features ((&rest features) &body body)
+  (let ((%features (gensym "features")))
+    `(let ((,%features (list ,@features)))
+       (unwind-protect
+            (progn
+              (apply #'enable-features ,%features)
+              ,@body)
+         (apply #'disable-features ,%features)))))

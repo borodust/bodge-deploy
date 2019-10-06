@@ -13,4 +13,4 @@ esac
 
 SCRIPT=$1
 shift
-exec $HOME/opt/lisp/$CCL_BIN --quiet --batch --load "$HOME/bodge/scripts/utils.lisp" --load $SCRIPT --eval "(#__exit 0)" -- $@
+exec $HOME/.bodge/lisp/$CCL_BIN --quiet --batch --load "$HOME/.bodge/scripts/init.lisp" --load $SCRIPT --eval "(#__exit 0)" -- $@

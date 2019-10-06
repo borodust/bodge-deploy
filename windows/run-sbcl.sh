@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-SBCL_HOME=$HOME/opt/lisp/ $HOME/opt/lisp/sbcl $@
+SBCL_HOME=$HOME/.bodge/lisp/ $HOME/.bodge/lisp/sbcl $@

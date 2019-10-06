@@ -2,6 +2,9 @@
 
 shopt -s nocasematch
 
+LISP_IMPL=${1:-sbcl}
+ARCH=${2:-x86-64}
+
 UNAME="$(uname -s)"
 case "${UNAME}" in
     Linux*)     PLATFORM=linux;CCL_BIN=lx86cl64;;
@@ -11,8 +14,6 @@ case "${UNAME}" in
     *)          PLATFORM="UNKNOWN:${UNAME}";CCL_BIN=lx86cl64
 esac
 
-ARCH=${2:-x86-64}
-LISP_IMPL=${1:-sbcl}
 FILES_URL=http://bodge.borodust.org/files
 
 BIN_PATH=$HOME/bin/
@@ -20,21 +21,17 @@ BIN_PATH=$HOME/bin/
 LISP=$LISP_IMPL-$PLATFORM-$ARCH
 LISP_ARCHIVE=/tmp/$LISP.tar.gz
 LISP_URL=$FILES_URL/$LISP.tar.gz
-LISP_PATH=$HOME/opt/lisp/
+LISP_PATH=$HOME/.bodge/lisp/
 LISP_RUNNER=$BIN_PATH/lisp
 LISP_RUNNER_URL=$FILES_URL/$LISP_IMPL.sh
 LISP_BIN=$BIN_PATH/lisp-bin
 
 QUICKLISP_URL=https://beta.quicklisp.org/quicklisp.lisp
-QUICKLISP_FILE=$HOME/quicklisp.lisp
+QUICKLISP_FILE=$HOME/.bodge/quicklisp.lisp
 
 SCRIPTS_URL=$FILES_URL/scripts.tar.gz
 SCRIPTS_ARCHIVE=/tmp/scripts.tar.gz
-SCRIPTS_PATH=$HOME/bodge/scripts/
-
-C2FFI_ARCHIVE_NAME=c2ffi-$PLATFORM-$ARCH.zip
-C2FFI_URL=$FILES_URL/$C2FFI_ARCHIVE_NAME
-C2FFI_ARCHIVE_PATH=/tmp/$C2FFI_ARCHIVE_NAME
+SCRIPTS_PATH=$HOME/.bodge/scripts/
 
 CCL_IMAGE=$LISP_PATH/$CCL_BIN.image
 
@@ -82,7 +79,3 @@ inflate $SCRIPTS_ARCHIVE $SCRIPTS_PATH
 echo "Preparing Quicklisp"
 download $QUICKLISP_URL $QUICKLISP_FILE
 $LISP_RUNNER $SCRIPTS_PATH/ensure-quicklisp.lisp $QUICKLISP_FILE
-
-echo "Installing c2ffi"
-download $C2FFI_URL $C2FFI_ARCHIVE_PATH
-cd $BIN_PATH && unzip -o $C2FFI_ARCHIVE_PATH
