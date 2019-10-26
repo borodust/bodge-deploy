@@ -34,5 +34,9 @@
                for url = (format-spec-url arch os extension)
                do (uiop:with-temporary-file (:pathname name)
                     (shout "Inflating ~A into ~A" url spec-directory)
-                    (wget url name)
-                    (unzip name spec-directory))))
+                    (handler-case
+                        (progn
+                          (wget url name)
+                          (unzip name spec-directory))
+                      (serious-condition (e)
+                        (warn "Failed to download ~A. Skipping:~%~A" url e))))))
